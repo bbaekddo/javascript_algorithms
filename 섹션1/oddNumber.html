@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n1, n2, n3, n4, n5, n6, n7) {
+            let minNumber = Number.MAX_VALUE;
+            let sum = 0;
+            const numbers = [n1, n2, n3, n4, n5, n6, n7];
+            const oddNumbers = [];
+
+            numbers.forEach((index) => {
+                if (index % 2 === 1) {
+                    oddNumbers.push(index);
+                }
+            });
+
+            oddNumbers.forEach((index) => {
+                if (index < minNumber) {
+                    minNumber = index;
+                }
+                sum += index;
+            })
+
+            return [minNumber, sum];
+        }
+
+        console.log(`minimum number : ${solution(12, 77, 38, 41, 53, 92, 85)[0]}`);
+        console.log(`sum : ${solution(12, 77, 38, 41, 53, 92, 85)[1]}`);
+    </script>
+</body>
+</html>
