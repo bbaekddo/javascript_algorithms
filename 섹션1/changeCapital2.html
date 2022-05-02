@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(word) {
+            let ans = [];
+            let tempASCII;
+
+            for (let i = 0; i < word.length; i++) {
+                if (word.charCodeAt(i) >= 65 && word.charCodeAt(i) <= 90) {
+                    tempASCII = word.charCodeAt(i) + 32;
+                    ans.push(String.fromCharCode(tempASCII));
+                } else if (word.charCodeAt(i) >= 97 && word.charCodeAt(i) <= 122) {
+                    tempASCII = word.charCodeAt(i) - 32;
+                    ans.push(String.fromCharCode(tempASCII));
+                } else {
+                    ans.push(word[i]);
+                }
+            }
+
+            return ans.join('');
+        }
+
+        console.log(solution('Hello World!!'));
+    </script>
+</body>
+</html>
