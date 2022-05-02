@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(word) {
+            let ans = [];
+
+            for (let i = 0; i < word.length; i++) {
+                if (!ans.find(w => w === word[i])) {
+                    ans.push(word[i]);
+                }
+            }
+
+            return ans.join('');
+        }
+
+        console.log(solution('schuswohclsa'));
+    </script>
+</body>
+</html>
