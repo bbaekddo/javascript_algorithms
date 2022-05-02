@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        const today = 0;
+
+        function solution(n1, n2, n3, n4, n5, n6, n7) {
+            let ans = 0;
+            const cars = [n1, n2, n3, n4, n5, n6, n7];
+
+            cars.forEach((index) => {
+                if (index % 10 === today) {
+                    ans++;
+                }
+            })
+
+            return ans;
+        }
+
+        console.log(solution(12, 20, 54, 30, 87, 91, 30));
+    </script>
+</body>
+</html>
