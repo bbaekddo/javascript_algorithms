@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n) {
+            let das = n / 12;
+            let remain = n % 12;
+
+            if (remain > 0) {
+                das++;
+            }
+
+            return das;
+        }
+
+        console.log(Math.trunc(solution(178)));
+    </script>
+</body>
+</html>

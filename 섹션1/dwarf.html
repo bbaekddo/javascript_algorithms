@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(array) {
+            let sum = array.reduce((accumulator, currentValue) => accumulator + currentValue);
+            let dwarfs = [];
+
+            for (let i = (array.length - 1); i > 1; i--) {
+                for (let j = (array.length - 2); j > 0; j--) {
+                    sum -= (array[i] + array[j]);
+
+                    if (sum === 100) {
+                        for (let k = 0; k < array.length; k++) {
+                            if (k === i || k === j) {
+                                continue;
+                            }
+                            dwarfs.push(array[k]);
+                        }
+                        break;
+                    }
+
+                    sum += (array[i] + array[j]);
+                }
+            }
+
+            return dwarfs;
+        }
+
+        const input = [20, 7, 23, 19, 10, 15, 25, 8, 13];
+
+        console.log(solution(input));
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(word) {
+            let ans = '';
+            let middleIndex;
+
+            if (word.length % 2 === 1) {
+                middleIndex = word.length / 2;
+                ans = word[Math.floor(middleIndex)];
+            } else {
+                if (word.length > 2) {
+                    middleIndex = word.length / 2;
+                    ans = (word[Math.floor(middleIndex - 1)] + word[Math.floor(middleIndex)]);
+                }
+            }
+
+            return ans;
+        }
+
+        console.log(solution('helloWorld'));
+    </script>
+</body>
+</html>

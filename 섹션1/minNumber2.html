@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n1, n2, n3, n4, n5, n6, n7) {
+            let ans = Number.MAX_VALUE;
+            const numbers = [n1, n2, n3, n4, n5, n6, n7];
+
+            numbers.forEach((index) => {
+                if (index < ans) {
+                    ans = index;
+                }
+            });
+
+            return ans;
+        }
+
+        console.log(solution(15, 6, 7, 11, 20, 15, 17));
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(N, words) {
+            let ans = words[0];
+
+            for (let i = 1; i < N; i++) {
+                if (ans.length < words[i].length) {
+                    ans = words[i];
+                }
+            }
+
+            return ans;
+        }
+
+        const words = ['teacher', 'time', 'student', 'beautiful', 'good'];
+
+        console.log(solution(5, words));
+    </script>
+</body>
+</html>

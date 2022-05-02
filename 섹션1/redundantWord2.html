@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, words) {
+            let ans = [];
+
+            for (let i = 0; i < n; i++) {
+                if (!ans.find( word => word === words[i] )) {
+                    ans.push(words[i]);
+                }
+            }
+
+            return ans.join('\n');
+        }
+
+        const totalWords = 6;
+        const words = ['good', 'time', 'good', 'test', 'time', 'student'];
+
+        console.log(solution(totalWords, words));
+    </script>
+</body>
+</html>
