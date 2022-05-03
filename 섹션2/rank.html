@@ -6,7 +6,7 @@
 </head>
 <body>
     <script>
-        function solution(n, scores) {
+        function solution1(n, scores) {
             const tempArray = [];
             const answers = [];
 
@@ -60,6 +60,25 @@
             }
 
             return answers.join(' ');
+        }
+
+        // 정답 참고
+        function solution(n, scores) {
+            let ans = [];
+            let count = 1;
+
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (scores[j] > scores[i]) {
+                        count++;
+                    }
+                }
+
+                ans.push(count);
+                count = 1;
+            }
+
+            return ans;
         }
 
         const inputs = [87, 100, 92, 100, 76, 82];
