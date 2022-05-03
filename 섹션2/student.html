@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, students) {
+            let ans = 1;
+            let temp = students[0];
+
+            for (let i = 0; i < n; i++) {
+                if (students[i] > temp) {
+                    ans++;
+                    temp = students[i];
+                }
+            }
+
+            return ans;
+        }
+
+        const inputs = [130, 138, 135, 140, 130, 139, 142, 145];
+
+        console.log(solution(8, inputs));
+    </script>
+</body>
+</html>
