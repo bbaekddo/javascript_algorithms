@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, results) {
+            let ans = 0;
+            let checkSerial = false;
+            let serialCount = 0;
+
+            for (let i = 0; i < n; i++) {
+                // 이전에 정답인지 체크
+                if (checkSerial) {
+                    // 정답이 이어질 경우
+                    if (results[i] === 1) {
+                        ans += (serialCount + 1);
+                        serialCount++;
+                        // 정답이 끊길 경우
+                    } else {
+                        checkSerial = false;
+                        serialCount = 0;
+                    }
+                } else {
+                    // 이전에 오답, 현재 정답일 경우
+                    if (results[i] === 1) {
+                        checkSerial = true;
+                        ans++;
+                        serialCount++;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const results = [1, 0, 1, 1, 1, 0, 0, 1, 1, 0];
+
+        console.log(solution(10, results));
+    </script>
+</body>
+</html>
