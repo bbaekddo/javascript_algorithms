@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, board) {
+
+            // 1. 각 열의 합 배열
+            const columnSums = [];
+            let columnSum = 0;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    columnSum += board[i][j];
+                }
+                columnSums.push(columnSum);
+                columnSum = 0;
+            }
+            const maxColumnSum = Math.max(...columnSums);
+
+            // 2. 각 행의 합 배열
+            const rowSums = [];
+            let rowSum = 0;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    rowSum += board[j][i];
+                }
+                rowSums.push(rowSum);
+                rowSum = 0;
+            }
+            const maxRowSum = Math.max(...rowSums);
+
+            // 3. 대각선 합 배열
+            let crossSum1 = 0;
+            let crossSum2 = 0;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (i === j) {
+                        crossSum1 += board[i][j];
+                    }
+                }
+            }
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (i === ((n - 1) - j)) {
+                        crossSum2 += board[i][j];
+                    }
+                }
+            }
+            const maxCrossSum = Math.max(crossSum1, crossSum2);
+
+            return Math.max(...[maxColumnSum, maxRowSum, maxCrossSum]);
+        }
+
+        const board = [
+                [10, 13, 10, 12, 15],
+                [12, 39, 30, 23, 11],
+                [11, 25, 50, 53, 15],
+                [19, 27, 29, 37, 27],
+                [19, 13, 30, 13, 19]
+        ];
+
+        console.log(solution(5, board));
+    </script>
+</body>
+</html>

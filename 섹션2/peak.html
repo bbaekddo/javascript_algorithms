@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, mountains) {
+            let ans = 0;
+
+            // 봉위 주변 좌표값
+            const dx = [-1, 1, 0, 0];
+            const dy = [0, 0, -1, 1];
+
+            let tempPeak;
+            let checkPeak;
+
+            // 봉우리 찾기
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    tempPeak = mountains[i][j];
+                    checkPeak = true;
+
+                    // 봉우리보다 큰 게 있으면 탐색 종료
+                    for (let k = 0; k < 4; k++) {
+                        // 가장자리를 벗어나는 경우
+                        if ((i + dx[k]) < 0 || (i + dx[k]) >= n) {
+                            continue;
+                        } else if ((j + dy[k]) < 0 || (j + dy[k]) >= n) {
+                            continue;
+                        }
+
+                        // 봉우리 판단
+                        if (tempPeak <= mountains[i + dx[k]][j + dy[k]]) {
+                            checkPeak = false;
+                            break;
+                        }
+                    }
+
+                    // 봉우리일 경우 개수 추가
+                    if (checkPeak) {
+                        ans++;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const inputs = [
+                [5, 3, 7, 2, 3],
+                [3, 7, 1, 6, 1],
+                [7, 2, 5, 3, 4],
+                [4, 3, 6, 4, 1],
+                [8, 7, 3, 5, 2]
+        ];
+
+        console.log(solution(5, inputs));
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, numbers) {
+            const ans = [];
+            ans.push(numbers[0]);
+            let temp = numbers[0];
+
+            for (let i = 1; i < n; i++) {
+                if (numbers[i] > temp) {
+                    ans.push(numbers[i]);
+                }
+                temp = numbers[i];
+            }
+
+            return ans;
+        }
+
+        const inputs = [2, 3, 1, 7, 9, 5, 8];
+
+        console.log(solution(7, inputs));
+    </script>
+</body>
+</html>

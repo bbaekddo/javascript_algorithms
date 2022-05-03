@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(n, scores) {
+            const tempArray = [];
+            const answers = [];
+
+            // tempArray 초기화
+            for (let i = 0; i < n; i++) {
+                tempArray.push({
+                    score : scores[i],
+                    rank : 0
+                })
+            }
+
+            // tempArray 정렬
+            tempArray.sort((a, b) => {
+                if (a.score > b.score) {
+                    return -1;
+                }
+                if (a.score < b.score) {
+                    return 1;
+                }
+
+                return 0;
+            });
+
+            // 등수 체크
+            let tempScore = tempArray[0].score;
+            let scoreCount = 0;
+            let scoreRank = 1;
+            for (let i = 0; i < n; i++) {
+                if (tempArray[i].score === tempScore) {
+                    tempArray[i].rank = scoreRank;
+                    scoreCount++;
+                } else if (tempArray[i].score !== tempScore && scoreCount === 0){
+                    scoreRank++;
+                    tempArray[i].rank = scoreRank;
+
+                    tempScore = tempArray[i].score;
+                } else {
+                    scoreRank += scoreCount;
+                    tempArray[i].rank = scoreRank;
+
+                    scoreCount = 1;
+                    tempScore = tempArray[i].score;
+                }
+            }
+
+            // 정답 출력 배열 설정
+            for (let i = 0; i < n; i++) {
+                answers[i] = tempArray.find((element) => {
+                    return element.score === scores[i];
+                }).rank;
+            }
+
+            return answers.join(' ');
+        }
+
+        // 정답 참고
+        function solution(n, scores) {
+            let ans = [];
+            let count = 1;
+
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (scores[j] > scores[i]) {
+                        count++;
+                    }
+                }
+
+                ans.push(count);
+                count = 1;
+            }
+
+            return ans;
+        }
+
+        const inputs = [87, 100, 92, 100, 76, 82];
+
+        console.log(solution(6, inputs));
+    </script>
+</body>
+</html>
