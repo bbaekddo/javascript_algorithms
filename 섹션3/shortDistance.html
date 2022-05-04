@@ -6,13 +6,11 @@
 </head>
 <body>
     <script>
-        function solution(word, character) {
+        function solution1(word, character) {
             let ans = [];
 
             const regExp = new RegExp(character);
             const splitWords = word.split(regExp).filter((element, i) => element !== '');
-
-            console.log(`splitWord : ${splitWords}`);
 
             let index = 0;
             let count = 1;
@@ -44,7 +42,45 @@
             return ans.join(' ');
         }
 
-        console.log(solution('hellomyheyheeymen', 'e'));
+        function solution(word, character) {
+            let ans = [];
+
+            // 시작할 때 특정 문자와의 거리 초기화
+            let currentDistance = 1000;
+
+            // 문자열 기준으로 왼쪽에 있는 특정 문자와 거리 산출
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === character) {
+                    currentDistance = 0;
+                    ans.push(currentDistance);
+                } else {
+                    currentDistance++;
+                    ans.push(currentDistance);
+                }
+            }
+
+            currentDistance = 1000;
+            // 문자열 기준으로 오른쪽에 있는 특정 문자와 거리 산출
+            for (let i = (word.length - 1); i >= 0; i--) {
+                if (word[i] === character) {
+                    currentDistance = 0;
+                } else {
+                    currentDistance++;
+
+                    if (ans[i] > currentDistance) {
+                        ans[i] = currentDistance;
+                    }
+                }
+
+                if (ans[i] > 1000) {
+                    ans[i] = 1;
+                }
+            }
+
+            return ans.join(' ');
+        }
+
+        console.log(solution('hellomyheyhyjmen', 'e'));
     </script>
 </body>
 </html>
