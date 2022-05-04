@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(word, character) {
+            let ans = [];
+
+            const regExp = new RegExp(character);
+            const splitWords = word.split(regExp).filter((element, i) => element !== '');
+
+            let index = 0;
+            let count = 1;
+            let halfPosition = 0;
+
+            for (let i = 0; i < word.length; i++) {
+                // 특정 문자는 문자 거리를 0으로 입력하고 카운트와 인덱스 초기화
+                if (word[i] === character) {
+                    // 특정 문자가 반복되는 경우 고려
+                    if (i < (word.length - 1) && word[i + 1] !== character) {
+                        index++;
+                    }
+                    ans.push(0);
+                    count = 1;
+                } else {
+                    // 중간 위치를 기점으로 특정 문자와 거리 산출
+                    halfPosition = Math.ceil(splitWords[index].length / 2);
+
+                    if (count <= halfPosition) {
+                        ans.push(count);
+                    } else {
+                        ans.push(splitWords[index].length - count + 1);
+                    }
+
+                    count++;
+                }
+            }
+
+            return ans.join(' ');
+        }
+
+        function solution(word, character) {
+            let ans = [];
+
+            // 시작할 때 특정 문자와의 거리 초기화
+            let currentDistance = 1000;
+
+            // 문자열 기준으로 왼쪽에 있는 특정 문자와 거리 산출
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === character) {
+                    currentDistance = 0;
+                    ans.push(currentDistance);
+                } else {
+                    currentDistance++;
+                    ans.push(currentDistance);
+                }
+            }
+
+            currentDistance = 1000;
+            // 문자열 기준으로 오른쪽에 있는 특정 문자와 거리 산출
+            for (let i = (word.length - 1); i >= 0; i--) {
+                if (word[i] === character) {
+                    currentDistance = 0;
+                } else {
+                    currentDistance++;
+
+                    if (ans[i] > currentDistance) {
+                        ans[i] = currentDistance;
+                    }
+                }
+
+                if (ans[i] > 1000) {
+                    ans[i] = 1;
+                }
+            }
+
+            return ans.join(' ');
+        }
+
+        console.log(solution('hellomyheyhyjmen', 'e'));
+    </script>
+</body>
+</html>

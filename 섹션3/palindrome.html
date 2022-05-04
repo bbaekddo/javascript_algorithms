@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(word) {
+            let ans = 'YES';
+            word = word.toUpperCase();
+
+            console.log(`word : ${word}`);
+
+            let halfPosition = Math.floor(word.length / 2);
+            for (let i = 0; i < halfPosition; i++) {
+                if (word[i] !== word[word.length - 1 - i]) {
+                    ans = 'NO';
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        console.log(solution('byeYi'));
+    </script>
+</body>
+</html>

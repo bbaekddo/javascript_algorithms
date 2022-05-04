@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(word) {
+            let ans = 'YES';
+            let newWord = word.replace(/[`1234567890~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim, '');
+            let halfPosition = Math.floor(newWord.length / 2);
+
+            newWord = newWord.toUpperCase();
+
+            for (let i = 0; i < halfPosition; i++) {
+                if (newWord[i] !== newWord[newWord.length - 1 - i]) {
+                    ans = 'NO';
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        function solution(word) {
+            let ans = 'YES';
+
+            // 알파벳 대문자를 제외하고 모두 제거
+            word = word.toUpperCase().replace(/[^A-Z]/g, '');
+
+            // 메소드 체인 활용 (배열로 변환 후 반전, 다시 문자열로 변환)
+            const reverseWord = word.split('').reverse().join('');
+
+            if (word !== reverseWord) {
+                ans = 'NO';
+            }
+
+            return ans;
+        }
+
+        console.log(solution('found7, time: study; Yduts; emit, 7Dnuof'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(word) {
+            let ans = [];
+
+            let count = 1;
+            let tempCharacter = word[0];
+            for (let i = 1; i < word.length; i++) {
+                // 마지막 문자일 경우
+                if (i === (word.length - 1)) {
+                    // 마지막 문자는 이전 압축 문자와 현재 문자를 저장
+                    if (word[i] === tempCharacter) {
+                        count++;
+                        ans.push(tempCharacter + String(count));
+                    } else {
+                        ans.push(tempCharacter + String(count));
+                        ans.push(word[i]);
+                    }
+                } else {
+                    if (word[i] === tempCharacter) {
+                        count++;
+                    } else {
+                        if (count === 1) {
+                            ans.push(tempCharacter);
+                        } else {
+                            ans.push(tempCharacter + String(count));
+                            count = 1;
+                        }
+
+                        tempCharacter = word[i];
+                    }
+                }
+            }
+
+            return ans.join('');
+        }
+
+        console.log(solution('KKHSSIISSSSSE'));
+    </script>
+</body>
+</html>
