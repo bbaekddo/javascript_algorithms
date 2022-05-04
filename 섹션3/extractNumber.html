@@ -9,14 +9,56 @@
         function solution(word) {
             let ans = [];
 
-            const reg = /[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ]/gim;
+            // A to z까지 알파벳과 공백으로 문자열 구분
+            const reg = /[A-z ]/gim;
 
-            ans = word.split(reg);
+            // 배열로 구분한 뒤 공백 값 제거
+            ans = word.split(reg).filter((element, i) => element !== '');
 
-            return Number(ans.join(''));
+            // Number, parseInt 함수를 사용하지 않을 경우
+            let zeroStart = true;
+            let answer = 1;
+            for (let i = 0; i < ans.length; i++) {
+                // 숫자가 붙어있지 않은 경우
+                if (ans[i].length === 1) {
+                    if (ans[i] === '0') {
+                        if (!zeroStart) {
+                            answer *= 10;
+                        }
+                    } else {
+                        if (zeroStart) {
+                            answer *= (ans[i][0] - '0');
+                            zeroStart = false;
+                            continue;
+                        }
+
+                        answer = (answer * 10) + (ans[i][0] - '0');
+                    }
+                // 숫자가 붙어있는 경우 for문 추가
+                } else {
+                    for (let j = 0; j < ans[i].length; j++) {
+                        if (ans[i][j] === '0') {
+                            if (!zeroStart) {
+                                answer *= 10;
+                            }
+                        } else {
+                            if (zeroStart) {
+                                answer *= (ans[i][j][0] - '0');
+                                zeroStart = false;
+                                continue;
+                            }
+
+                            answer = (answer * 10) + (ans[i][j][0] - '0');
+                        }
+                    }
+                }
+
+            }
+
+            return answer;
         }
 
-        console.log(solution('g0e0n2T0s8eS0oft'));
+        console.log(solution('001g0en22T0s8eS0oft'));
     </script>
 </body>
 </html>
