@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, numbers) {
+            let answerIndex = 0;
+
+            let tempNumString = '';
+            let tempLength = 0;
+            let tempSum = 0;
+            let maxSum = 0;
+            let maxLength = 0;
+            numbers.forEach((element, index) => {
+                tempNumString = String(element);
+                tempLength = tempNumString.length;
+                for (let i = 0; i < tempLength; i++) {
+                    tempSum += tempNumString[i] - '0';
+                }
+
+                // 자릿수 최댓값 비교 후 인덱스 저장
+                if (tempSum > maxSum) {
+                    maxSum = tempSum;
+                    maxLength = tempLength;
+                    answerIndex = index;
+                // 값이 같을 경우 자릿수 큰 숫자 출력
+                } else if (tempSum === maxSum && tempLength >= maxLength) {
+                    maxSum = tempSum;
+                    maxLength = tempLength;
+                    answerIndex = index;
+                }
+
+                tempSum = 0;
+                tempLength = 0;
+            });
+
+            return numbers[answerIndex];
+        }
+
+        const inputs = [1289, 4601, 60310238, 401230517, 52169, 1371, 1238123];
+
+        console.log(solution(7, inputs));
+    </script>
+</body>
+</html>
