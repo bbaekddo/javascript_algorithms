@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(n, m, results) {
+            let ans = 0;
+            let checkMentee = true;
+
+            // 멘토 i, 멘티 j
+            for (let i = 1; i <= n; i++) {
+                for (let j = 1; j <= n; j++) {
+                    if (i !== j) {
+                        // 모든 배열 순회
+                        for (let k = 0; k < m; k++) {
+                            // 멘토의 인덱스가 멘티의 인덱스보다 클 경우 짝 카운트 안함
+                            if (results[k].indexOf(i) > results[k].indexOf(j)) {
+                                checkMentee = false;
+                            }
+                        }
+
+                        if (checkMentee) {
+                            ans++;
+                        }
+
+                        checkMentee = true;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        // 시간 복잡도가 첫 번째 솔루션과 똑같음
+        function solution(n, m, results) {
+            let ans = 0;
+            let maxIndex = 0;
+            let mentees = [];
+            let checkMentee = true;
+
+            for (let i = 1; i <= n; i++) {
+                // 최대 인덱스를 가진 배열에서 멘티 목록 저장
+                for (let j = 0; j < m; j++) {
+                    if (results[j].indexOf(i) > maxIndex) {
+                        maxIndex = results[j].indexOf(i);
+                        mentees = results[j].slice(maxIndex);
+                    }
+                }
+                maxIndex = 0;
+
+                // 멘티 목록과 인덱스 비교
+                if (mentees.length > 1) {
+                    for (let mentee of mentees) {
+                        for (let j = 0; j < m; j++) {
+                            if (i === mentee || results[j].indexOf(i) > results[j].indexOf(mentee)) {
+                                checkMentee = false;
+                                break;
+                            }
+                        }
+
+                        if (checkMentee) {
+                            ans++;
+                        }
+
+                        checkMentee = true;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const inputs = [
+                [3, 4, 1, 2],
+                [4, 3, 1, 2],
+                [3, 1, 4, 2]
+        ];
+
+        console.log(solution(4, 3, inputs));
+    </script>
+</body>
+</html>
