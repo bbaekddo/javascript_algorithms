@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, index, numbers) {
+            const cardSum = [];
+
+            // 3장의 카드 합 배열
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (i !== j) {
+                        for (let k = 0; k < n; k++) {
+                            if (i !== k && j !== k) {
+                                cardSum.push(numbers[i] + numbers[j] + numbers[k]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 중복값이 없는 Set 선언
+            const cardSumSet = new Set(cardSum);
+
+            // Set을 다시 배열로
+            const newCardSum = [...cardSumSet];
+            newCardSum.sort((a, b) => b - a);
+
+            return newCardSum[index - 1];
+        }
+
+        const inputs = [13, 15, 34, 23, 45, 65, 33, 11, 26, 42];
+
+        console.log(solution(10, 3, inputs));
+    </script>
+</body>
+</html>

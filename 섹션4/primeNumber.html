@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, numbers) {
+            const ans = [];
+
+            numbers.forEach((element, index) => {
+                let numString = String(element);
+                let reverseNumber = Number(numString.split('').reverse().join(''));
+
+                if (isPrime(reverseNumber)) {
+                    ans.push(reverseNumber);
+                }
+            });
+
+            return ans;
+        }
+
+        // 소수 판단
+        function isPrime(number) {
+            if (number === 1) {
+                return false;
+            } else if (number === 2) {
+                return true;
+            } else {
+                for (let i = 2; i < Math.floor(Math.sqrt(number)); i++) {
+                    if (number % i === 0) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        const inputs = [32, 55, 62, 20, 250, 370, 200, 30, 100];
+
+        console.log(solution(9, inputs));
+    </script>
+</body>
+</html>
