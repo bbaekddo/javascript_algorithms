@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m, students) {
+            let maxCount = 0;
+            let totalBudget = m;
+            let count = 0;
+
+            // 총 가격 순으로 정렬
+            students.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+
+            // 가격 비교
+            for (let i = 0; i < n; i++) {
+                let discount = students[i][0] * 0.5 + students[i][1];
+                totalBudget -= discount;
+                count++;
+
+                // 총 예산이 0보다 작으면 탐색 종료
+                for (let j = 0; j < n; j++) {
+                    if (i !== j && totalBudget < 0) {
+                        count--;
+                        break;
+                    } else if (i !== j && totalBudget > 0) {
+                        totalBudget -= students[j][0] + students[j][1];
+                        count++;
+                    }
+                }
+
+                if (count > maxCount) {
+                    maxCount = count;
+                }
+
+                // 카운트와 예산 초기화
+                count = 0;
+                totalBudget = m;
+            }
+
+            return maxCount;
+        }
+
+        const inputs = [
+            [6, 6],
+            [2, 2],
+            [4, 3],
+            [4, 5],
+            [10, 3]
+        ];
+
+        console.log(solution(5, 28, inputs));
+    </script>
+</body>
+</html>
