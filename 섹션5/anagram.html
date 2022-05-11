@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(input1, input2) {
+            let ans = 'YES';
+
+            const word1 = input1.split('');
+            const word2 = input2.split('');
+
+            const anagram1 = new Map();
+            const anagram2 = new Map();
+            let count = 0;
+
+            // word1 문자 개수 분리
+            for (let i = 0; i < word1.length; i++) {
+                for (let j = 0; j < word1.length; j++) {
+                    if (word1[i] === word1[j]) {
+                        count++;
+                    }
+                }
+
+                anagram1.set(word1[i], count);
+                count = 0;
+            }
+
+            // word2 문자 개수 분리
+            for (let i = 0; i < word2.length; i++) {
+                for (let j = 0; j < word2.length; j++) {
+                    if (word2[i] === word2[j]) {
+                        count++;
+                    }
+                }
+
+                anagram2.set(word2[i], count);
+                count = 0;
+            }
+
+            // 같은 문자와 개수가 확인
+            for (let [key, value] of anagram1) {
+                if (value === anagram2.get(key)) {
+                    anagram2.set(key, 0);
+                }
+            }
+
+            // 두 번째 문자열에서 모두 검사했는지 확인
+            for (let [key, value] of anagram2) {
+                if (value !== 0) {
+                    ans = 'NO';
+                }
+            }
+
+            return ans;
+        }
+
+        function solution(input1, input2) {
+            let ans = 'YES';
+
+            const anagram1 = new Map();
+
+            // 아나그램 Map 생성
+            for (let character of input1) {
+                if (anagram1.has(character)) {
+                    anagram1.set(character, anagram1.get(character) + 1);
+                } else {
+                    anagram1.set(character, 1);
+                }
+            }
+
+            console.log(anagram1);
+
+            for (let character of input2) {
+                // 일치하는 문자가 없거나 개수가 안 맞는 경우
+                if (anagram1.get(character) === 0) {
+                    ans = 'NO';
+                    break;
+                }
+
+                // 문자가 일치하면 Map에서 개수 하나씩 감소
+                let count = anagram1.get(character);
+                anagram1.set(character, count - 1);
+            }
+
+            // 아나그램 Map에 문자가 추가로 있을 경우
+            for (let [key, value] of anagram1) {
+                if (value !== 0) {
+                    ans = 'NO';
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        const input1 = 'AbaAeCe';
+        const input2 = 'baeeACA';
+
+        console.log(solution(input1, input2));
+    </script>
+</body>
+</html>

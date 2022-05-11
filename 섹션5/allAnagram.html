@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution1(input1, input2) {
+            let ans = 0;
+
+            const word1 = input1.split('');
+            const word2 = input2.split('');
+            const anagramLength = input2.length;
+
+            const anagram1 = new Map();
+            const anagram2 = new Map();
+
+            const word1Set = new Set();
+            // word2의 길이만큼 tempArray를 만들어야함! 실수
+            for (let i = 0; i < (word1.length - anagramLength + 1); i++) {
+                let tempArray = [word1[i], word1[i + 1], word1[i + 2]];
+                word1Set.add(tempArray);
+            }
+
+            let count = 0;
+            // word2 아나그램 맵 생성
+            for (let i = 0; i < anagramLength; i++) {
+                for (let j = 0; j < anagramLength; j++) {
+                    if (word2[i] === word2[j]) {
+                        count++;
+                    }
+                }
+
+                anagram2.set(word2[i], count);
+                count = 0;
+            }
+
+            // 아나그램 확인
+            for (let i of word1Set) {
+                // word1의 부분 문자열에 대한 아나그램 생성
+                for (let j = 0; j < i.length; j++) {
+                    for (let k = 0; k < i.length; k++) {
+                        if (i[j] === i[k]) {
+                            count++;
+                        }
+                    }
+
+                    anagram1.set(i[j], count);
+                    count = 0;
+                }
+
+                // 두 문자열의 아나그램 확인
+                for (let [key, value] of anagram2) {
+                    if (value === anagram1.get(key)) {
+                        anagram1.set(key, 0);
+                    }
+                }
+
+                let checkAnagram = true;
+
+                for (let [key, value] of anagram1) {
+                    if (value !== 0) {
+                        checkAnagram = false;
+                    }
+                }
+
+                // 아나그램이 발견되면 OK
+                if (checkAnagram) {
+                    ans++;
+                }
+
+                // 첫 번째 부분 문자열 아나그램 초기화
+                anagram1.clear();
+            }
+
+            return ans;
+        }
+
+        function solution(input1, input2) {
+            // 아나그램 Map과 문자열을 저장할 Set 생성
+            let anagram = getMap(input2);
+            const anagramSet = new Set();
+
+            // window는 비교 아나그램의 길이
+            let startIndex = 0;
+            let index = 0;
+            const window = input2.length;
+            while (index < input1.length) {
+                let character = input1.charAt(index);
+                let gap = index - startIndex;
+
+                if (anagram.has(character)) {
+                    if (gap === (window - 1)) {
+                        anagram.set(character, anagram.get(character) - 1);
+
+                        // 아나그램 Map에 남아있는 문자 확인
+                        let checkAnagram = true;
+                        for (let [key, value] of anagram) {
+                            if (value !== 0) {
+                                checkAnagram = false;
+                            }
+                        }
+
+                        // 이상 없으면 아나그램 문자열 Set에 추가
+                        if (checkAnagram) {
+                            anagramSet.add(input1.slice(startIndex, index + 1));
+                        }
+
+                        // startIndex의 문자 아나그램에서 복구
+                        let deleteCharacter = input1.charAt(startIndex);
+                        anagram.set(deleteCharacter, anagram.get(deleteCharacter) + 1);
+                        startIndex++;
+                    } else if (gap < (window - 1)) {
+                        anagram.set(character, anagram.get(character) - 1);
+                    }
+
+                    index++;
+                // 현재 비교 문자열이 아나그램에 없을 경우 다음 인덱스로 넘어가고 리셋
+                } else {
+                    index++;
+                    startIndex = index;
+                    anagram = getMap(input2);
+                }
+            }
+
+            return anagramSet.size;
+        }
+
+        function getMap(string) {
+            const anagram = new Map();
+
+            // 아나그램 비교 문자열 생성
+            for (let character of string) {
+                if (anagram.has(character)) {
+                    anagram.set(character, anagram.get(character) + 1);
+                } else {
+                    anagram.set(character, 1);
+                }
+            }
+
+            return anagram;
+        }
+
+        const input1 = 'bacbabcAacbaabca';
+        const input2 = 'abc';
+
+        console.log(solution(input1, input2));
+    </script>
+</body>
+</html>
