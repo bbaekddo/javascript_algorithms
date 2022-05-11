@@ -64,7 +64,7 @@
 
             // 아나그램 Map 생성
             for (let character of input1) {
-                if (anagram1.get(character)) {
+                if (anagram1.has(character)) {
                     anagram1.set(character, anagram1.get(character) + 1);
                 } else {
                     anagram1.set(character, 1);
