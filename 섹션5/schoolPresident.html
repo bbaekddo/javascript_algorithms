@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(input1, input2) {
+            let ans = '';
+
+            const candidates = [...input1];
+            const votes = input2.split('');
+            const results = new Array(candidates.length);
+
+            // 투표 배열 초기화
+            for (let i = 0; i < results.length; i++) {
+                results[i] = 0;
+            }
+
+            // 투표 결과 합산
+            let candidateIndex = 0;
+            for (let i = 0; i < votes.length; i++) {
+                candidateIndex = candidates.indexOf(votes[i]);
+                results[candidateIndex] += 1;
+            }
+
+            // 당선자 확인
+            let max = Math.max(...results);
+            ans = candidates[results.indexOf(max)];
+
+            return ans;
+        }
+
+        const input1 = ['A', 'B', 'C', 'D', 'E'];
+        const input2 = 'BACBACCACCBDEDE';
+
+        console.log(solution(input1, input2));
+    </script>
+</body>
+</html>
