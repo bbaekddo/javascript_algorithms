@@ -6,7 +6,7 @@
 </head>
 <body>
     <script>
-        function solution(k, revenue) {
+        function solution1(k, revenue) {
             const array = [...revenue];
             const revenueSum = [];
 
@@ -24,6 +24,28 @@
             revenueSum.sort((a, b) => b - a);
 
             return revenueSum[0];
+        }
+
+        function solution(k, revenue) {
+            const array = [...revenue];
+            let ans = 0;
+            let sum = 0;
+
+            for (let i = 0; i < k; i++) {
+                sum += array[i];
+            }
+            ans = sum;
+
+            // sliding window 알고리즘 적용
+            for (let i = k; i < array.length; i++) {
+                sum += array[i] - array[i - k];
+
+                if (sum > ans) {
+                    ans = sum;
+                }
+            }
+
+            return ans;
         }
 
         const input = [12, 15, 11, 20, 25, 10, 20, 19, 13, 15];
