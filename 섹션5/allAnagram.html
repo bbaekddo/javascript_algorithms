@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(input1, input2) {
+            let ans = 0;
+
+            const word1 = input1.split('');
+            const word2 = input2.split('');
+            const anagramLength = input2.length;
+
+            const anagram1 = new Map();
+            const anagram2 = new Map();
+
+            const word1Set = new Set();
+            for (let i = 0; i < (word1.length - anagramLength + 1); i++) {
+                let tempArray = [word1[i], word1[i + 1], word1[i + 2]];
+                word1Set.add(tempArray);
+            }
+
+            let count = 0;
+            // word2 아나그램 맵 생성
+            for (let i = 0; i < anagramLength; i++) {
+                for (let j = 0; j < anagramLength; j++) {
+                    if (word2[i] === word2[j]) {
+                        count++;
+                    }
+                }
+
+                anagram2.set(word2[i], count);
+                count = 0;
+            }
+
+            // 아나그램 확인
+            for (let i of word1Set) {
+                // word1의 부분 문자열에 대한 아나그램 생성
+                for (let j = 0; j < i.length; j++) {
+                    for (let k = 0; k < i.length; k++) {
+                        if (i[j] === i[k]) {
+                            count++;
+                        }
+                    }
+
+                    anagram1.set(i[j], count);
+                    count = 0;
+                }
+
+                // 두 문자열의 아나그램 확인
+                for (let [key, value] of anagram2) {
+                    if (value === anagram1.get(key)) {
+                        anagram1.set(key, 0);
+                    }
+                }
+
+                let checkAnagram = true;
+
+                for (let [key, value] of anagram1) {
+                    if (value !== 0) {
+                        checkAnagram = false;
+                    }
+                }
+
+                // 아나그램이 발견되면 OK
+                if (checkAnagram) {
+                    ans++;
+                }
+
+                // 첫 번째 부분 문자열 아나그램 초기화
+                anagram1.clear();
+            }
+
+            return ans;
+        }
+
+        const input1 = 'bacaAacba';
+        const input2 = 'abc';
+
+        console.log(solution(input1, input2));
+    </script>
+</body>
+</html>
