@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(s) {
+            let ans = [];
+
+            const stack = [];
+            for (let i = 0; i < s.length; i++) {
+                if (s.charAt(i) === '(') {
+                    stack.push(s.charAt(i));
+                } else if (s.charAt(i) === ')') {
+                    if (stack.length === 0) {
+                        ans.push(' Error ');
+                        break;
+                    } else {
+                        stack.pop();
+                    }
+                }
+
+                if (stack.length === 0 && s.charAt(i) !== ')') {
+                    ans.push(s.charAt(i));
+                }
+            }
+
+            return ans.join('');
+        }
+
+        const input = '(A(BC)D)EF(G(H)(IJ)K)LM(N)';
+
+        console.log(solution(input));
+    </script>
+</body>
+</html>
