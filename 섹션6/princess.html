@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, k) {
+            let ans = 0;
+
+            const prince = new Map();
+            for (let i = 0; i < n; i++) {
+                prince.set((i + 1), true);
+            }
+
+
+            let index = 1;
+            let pickNumber = 1;
+            let princeCount = n;
+
+            // 왕자가 한 명 남을 때까지 반복
+            while (princeCount > 1) {
+                // 현재 순서의 왕자가 탈락하지 않았을 때
+                if (prince.get(index) === true) {
+                    if (pickNumber === k) {
+                        prince.set(index, false);
+                        princeCount--;
+                        pickNumber = 1;
+                    } else {
+                        pickNumber++;
+                    }
+                }
+
+                // 위치에 따라서 인덱스 초기화
+                if (index === n) {
+                    index = 1;
+                } else {
+                    index++;
+                }
+            }
+
+            // 정답 출력
+            for (const [key, value] of prince) {
+                if (value === true) {
+                    ans = key;
+                }
+            }
+
+            return ans;
+        }
+
+        console.log(solution(8, 3));
+    </script>
+</body>
+</html>
