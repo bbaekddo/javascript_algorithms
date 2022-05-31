@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(s) {
+            const stack = [];
+            let a, b, result;
+            for (let i = 0; i < s.length; i++) {
+                let temp = Number(s.charAt(i));
+
+                if (!isNaN(temp)) {
+                    stack.push(temp);
+                } else {
+                    b = stack.pop();
+                    a = stack.pop();
+                    switch (s.charAt(i)) {
+                        case '+' :
+                            result = a + b;
+                            break;
+                        case '-' :
+                            result = a - b;
+                            break;
+                        case '*' :
+                            result = a * b;
+                            break;
+                        case '/' :
+                            result = a / b;
+                            break;
+                    }
+                    stack.push(result);
+                }
+            }
+
+            return stack.pop();
+        }
+
+        const input = '352+*9-';
+
+        console.log(solution(input));
+    </script>
+</body>
+</html>

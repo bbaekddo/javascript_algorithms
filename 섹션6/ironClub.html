@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(inputs) {
+            let ans = 0;
+
+            const checkBracket = [];
+
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs.charAt(i) === '(') {
+                    checkBracket.push(inputs.charAt(i));
+                } else {
+                    // 바로 전에 '('이 나왔을 경우
+                    if (inputs[i - 1] === '(') {
+                        checkBracket.pop();
+
+                        // '('의 개수만큼 절단면 추가
+                        if (checkBracket.length > 0) {
+                            ans += checkBracket.length;
+                        }
+                        // 바로 전에 ')'이 나왔을 경우
+                    } else {
+                        // 막대기 하나를 제거하고 절단면 추가
+                        if (checkBracket.length > 0) {
+                            checkBracket.pop();
+                            ans++;
+                        }
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const inputs = '(((()(()()))(())()))(()())';
+
+        console.log(solution(inputs));
+    </script>
+</body>
+</html>

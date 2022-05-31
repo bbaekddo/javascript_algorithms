@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(mandatory, schedule) {
+            let ans = 'YES';
+
+            // 필수 시간표 스택
+            const mandatoryStack = [];
+            for (let i = (mandatory.length - 1); i >= 0 ; i--) {
+                mandatoryStack.push(mandatory.charAt(i));
+            }
+
+            // 시간표 정합성 조회
+            for (let i = 0; i < schedule.length; i++) {
+                for (let j = 0; j < schedule[i].length; j++) {
+                    if (schedule[i].charAt(j) === mandatoryStack[mandatoryStack.length - 1]) {
+                        mandatoryStack.pop();
+                    } else {
+                        if (mandatoryStack.includes(schedule[i].charAt(j))) {
+                            break;
+                        }
+                    }
+
+                }
+
+                // 정답 없을 시 NO
+                if (mandatoryStack.length > 0) {
+                    ans = 'NO';
+                }
+
+                // 필수 시간표 배열 초기화
+                for (let i = (mandatory.length - 1); i >= 0 ; i--) {
+                    mandatoryStack.push(mandatory.charAt(i));
+                }
+            }
+
+            return ans;
+        }
+
+        const input1 = 'CBAD';
+        const input2 = [
+                'CBDAGE',
+                'CDBAGE',
+                'DCABGE'
+        ];
+
+        console.log(solution(input1, input2));
+    </script>
+</body>
+</html>
