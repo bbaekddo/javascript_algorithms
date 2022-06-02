@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(s, n, works) {
+            // 캐시 메모리 정의 & 초기화
+            const cache = new Array(s);
+            cache.fill(0);
+
+            // 캐시 메모리 사용
+            let hitIndex;
+            for (let i = 0; i < n; i++) {
+                // cache hit
+                if (cache.includes(works[i])) {
+                    hitIndex = cache.indexOf(works[i]);
+
+                    // hitIndex가 0이면 동작 안함
+                    if (hitIndex !== 0) {
+                        for (let j = (hitIndex - 1); j >= 0; j--) {
+                            cache[j + 1] = cache[j];
+                        }
+                    }
+                // cache miss
+                } else {
+                    for (let j = (s - 1); j > 0; j--) {
+                        cache[j] = cache[j - 1];
+                    }
+
+                }
+
+                cache[0] = works[i];
+            }
+
+            return cache.join(' ');
+        }
+
+        const works = [1, 2, 3, 2, 6, 2, 3, 5, 7];
+
+        console.log(solution(5, 9, works));
+    </script>
+</body>
+</html>
