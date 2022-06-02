@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, numbers) {
+            let max;
+            let index = 1;
+            let position = 0;
+            let j = index;
+
+            // 전체 오름차순 정렬
+            while (position < (n - 1)) {
+                if (numbers[j] < numbers[position]) {
+                    max = numbers[position];
+                    numbers[position] = numbers[j];
+                    numbers[j] = max;
+                }
+
+                j++;
+
+                if (j === n) {
+                    position++;
+                    index++;
+                    j = index;
+                }
+            }
+
+            // 음수 부분 분리
+            const negativeNumbers = [];
+            let i = 0;
+            while (i < n) {
+                if (numbers[i] < 0) {
+                    negativeNumbers.push(numbers[i]);
+                } else {
+                    break;
+                }
+
+                i++;
+            }
+
+            // 정답 출력
+            const ans = [];
+            for (let k = 0; k < n; k++) {
+                if (k < i) {
+                    ans.push(negativeNumbers.pop());
+                } else {
+                    ans.push(numbers[k]);
+                }
+            }
+
+            return ans;
+        }
+
+        const input = [1, 2, 3, -3, -2, 5, 6, -6];
+
+        console.log(solution(8, input));
+    </script>
+</body>
+</html>
