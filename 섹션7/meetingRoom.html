@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, meetings) {
+            // 회의 끝나는 시간 순으로 정렬
+            /*for (let i = 1; i < n; i++) {
+                let current = meetings[i];
+                let left = i - 1;
+
+                while (left >= 0 && current[1] <= meetings[left][1]) {
+                    if (current[1] === meetings[left][1] && current[0] > meetings[left][0]) {
+                        break;
+                    } else {
+                        meetings[left + 1] = meetings[left];
+                        left--;
+                    }
+                }
+
+                meetings[left + 1] = current;
+            }*/
+
+            // sort 함수 사용
+            meetings.sort(function (a, b) {
+                if (a[1] <= b[1]) {
+                    if (a[1] === b[1] && a[0] > b[0]) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                } else {
+                    return 1;
+                }
+            });
+
+            console.log(meetings);
+
+            // 끝나는 시간에 맞춰 개수 산출
+            let ans = 1;
+            let endTime = meetings[0][1];
+            for (let i = 1; i < n; i++) {
+                if (endTime <= meetings[i][0]) {
+                    ans++;
+                    endTime = meetings[i][1];
+                }
+            }
+
+            return ans;
+        }
+
+        const input = [
+                [1, 5],
+                [2, 3],
+                [2, 4],
+                [3, 3],
+                [4, 6],
+                [5, 7]
+        ];
+
+        console.log(solution(6, input));
+    </script>
+</body>
+</html>
