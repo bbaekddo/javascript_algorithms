@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m, numbers) {
+            let ans = 0;
+
+            // 퀵 정렬 오름차순
+            quickSort(numbers, 0, (numbers.length - 1));
+
+            ans = binarySearch(numbers, m, 0, (numbers.length - 1));
+
+            return (ans + 1);
+        }
+
+        // 퀵 정렬 함수
+        function quickSort(arr, begin, end) {
+            if (begin >= end) {
+                return;
+            }
+
+            // pivot은 통상 배열의 중간값
+            const middle = Math.floor((begin + end) / 2);
+            const pivot = arr[middle];
+            let left = begin;
+            let right = end;
+
+            // pivot에 따라 교환할 값의 인덱스 산출
+            while (left <= right) {
+                while (arr[left] < pivot) {
+                    left++;
+                }
+
+                while (arr[right] > pivot) {
+                    right--;
+                }
+
+                // pivot 위치가 변경될 경우 고려
+                if (left <= right) {
+                    let temp = arr[left];
+                    arr[left] = arr[right];
+                    arr[right] = temp;
+
+                    left++;
+                    right--;
+                }
+            }
+
+            // pivot의 왼쪽 배열 재귀함수 호출
+            if (begin < right) {
+                quickSort(arr, begin, right);
+            }
+
+            // pivot의 오른쪽 배열 재귀함수 호출
+            if (end > left) {
+                quickSort(arr, left, end);
+            }
+        }
+
+        // 이진탐색 함수
+        function binarySearch(arr, target, begin, end) {
+            const middle = Math.floor((begin + end) / 2);
+            const pivot = arr[middle];
+
+            if (target < pivot) {
+                return binarySearch(arr, target, begin, middle);
+            } else if (target > pivot) {
+                return binarySearch(arr, target, middle, end);
+            } else {
+                return middle;
+            }
+        }
+
+        const input = [23, 87, 65, 12, 57, 32, 99, 81];
+
+        console.log(solution(8, 32, input));
+    </script>
+</body>
+</html>

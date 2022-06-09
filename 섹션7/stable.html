@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(c, stables) {
+            let sortStable = quickSort(stables, 0, (stables.length - 1));
+            let count = 0;
+            let begin = 1;
+            let end = sortStable[sortStable.length - 1];
+            let distance;
+            let answer = 0;
+
+            while (begin <= end) {
+                distance = Math.floor((begin + end) / 2);
+                count = stableDistance(sortStable, distance);
+
+                if (count >= c) {
+                    begin = distance + 1;
+                    answer = distance;
+                } else {
+                    end = distance - 1;
+                }
+            }
+
+            return answer;
+        }
+
+        // 퀵 정렬
+        function quickSort(arr, begin, end) {
+            if (begin >= end) {
+                return;
+            }
+
+            const middle = Math.floor((begin + end) / 2);
+            const pivot = arr[middle];
+            let left = begin;
+            let right = end;
+
+            while (left <= right) {
+                while (arr[left] < pivot) {
+                    left++;
+                }
+
+                while (arr[right] > pivot) {
+                    right--;
+                }
+
+                if (left <= right) {
+                    [arr[left], arr[right]] = [arr[right], arr[left]];
+                    left++;
+                    right--;
+                }
+            }
+
+            if (begin < right) {
+                return quickSort(arr, begin, right);
+            } else if (left < end) {
+                return quickSort(arr, left, end);
+            } else {
+                return arr;
+            }
+        }
+
+        // 마구간 거리 계산
+        function stableDistance(arr, distance) {
+            let count = 1;
+            let endPoint = arr[0];
+
+            for (let i = 1; i < arr.length; i++) {
+                if ((arr[i] - endPoint) >= distance) {
+                    count++;
+                    endPoint = arr[i];
+                }
+            }
+
+            return count;
+        }
+
+       const input = [2, 9, 8, 4, 20, 32];
+
+       console.log(solution(3, input));
+    </script>
+</body>
+</html>

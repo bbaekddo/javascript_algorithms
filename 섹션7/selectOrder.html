@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, numbers) {
+            let index = 1;
+            let position = 0;
+            let tempNumber;
+            let j = index;
+
+            while (position < (n - 1)) {
+                // 가장 왼쪽의 값과 현재값 비교
+                if (numbers[j] < numbers[position]) {
+                    tempNumber = numbers[position];
+                    numbers[position] = numbers[j];
+                    numbers[j] = tempNumber;
+                }
+
+                // 현재값 위치 변경
+                j++;
+
+                // 현재값이 배열 범위를 넘어갈 경우 초기화
+                if (j === n) {
+                    position++;
+                    index++;
+                    j = index;
+                }
+            }
+
+            return numbers;
+        }
+
+        const input = [1, 13, 5, 3, 11, 7, 23, 12, 15];
+
+        console.log(solution(10, input));
+    </script>
+</body>
+</html>

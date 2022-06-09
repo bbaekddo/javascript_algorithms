@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(numbers) {
+            const n = numbers.length;
+
+            // 현재값은 오른쪾으로 계속 이동
+            for (let i = 1; i < n; i++) {
+                let current = numbers[i];
+                let left = i - 1;
+
+                // 현재값이 비교값보다 작을 경우, 비교 값을 오른쪽으로 한 자리씩 이동
+                while (left >= 0 && numbers[left] > current) {
+                    numbers[left + 1] = numbers[left];
+                    left--;
+                }
+
+                // 이동이 끝난 경우 빈 자리에 현재값 삽입
+                numbers[left + 1] = current;
+            }
+
+            return numbers;
+        }
+
+        const input = [11, 7, 5, 6, 10, 9];
+
+        console.log(solution(input));
+    </script>
+</body>
+</html>

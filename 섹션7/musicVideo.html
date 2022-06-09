@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m, songs) {
+            // 배열의 가장 큰 값이 최소합
+            let lt = Math.max(...songs);
+            let rt = songs.reduce((stack, element) => stack + element);
+
+            return findMin(songs, m, lt, rt);
+        }
+
+        // 최소 DVD 개수를 찾는 함수
+        function findMin(arr, count, begin, end) {
+            let sum = 0;
+            let target = Math.floor((begin + end) / 2);
+            let tempCount = count;
+            let nextCheck = true;
+
+            for (let i = 0; i < arr.length; i++) {
+                sum += arr[i];
+                // target 내에서 DVD가 만들어지는지 확인
+                if (sum > target) {
+                    tempCount--;
+                    sum = arr[i];
+                }
+
+                // count가 초과되면 불가
+                if (tempCount <= 0) {
+                    nextCheck = false;
+                }
+            }
+
+            // 현재 개수로 제작 가능하면 이분탐색 다시 실행
+            if (nextCheck) {
+                return findMin(arr, count, begin, target);
+            // 현재 개수로 제작 불가능하면, 이전 개수로 최소 개수 찾기
+            } else {
+                sum = 0;
+                target = end;
+                tempCount = count;
+
+                let i = 0;
+                // 최소 개수 찾을 때까지 1개씩 target을 줄여가며 반복
+                while (i < arr.length) {
+                    sum += arr[i];
+
+                    if (sum > target) {
+                        tempCount--;
+                        sum = arr[i];
+                    }
+
+                    i++;
+
+                    // 현재 개수로 가능하면 1개 줄인 개수로 재확인
+                    if (i === (arr.length - 1) && tempCount > 0) {
+                        target--;
+                        tempCount = count;
+                        i = 0;
+                    }
+
+                    // 현재 개수로 불가능하면 1개 많은 개수로 반환
+                    if (tempCount <= 0) {
+                        target++;
+                        break;
+                    }
+                }
+
+                return target;
+            }
+        }
+
+        const input = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        console.log(solution(9, 3, input));
+    </script>
+</body>
+</html>
