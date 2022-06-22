@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n) {
+            const start = 1;
+
+            printN(start, n);
+        }
+
+        function printN(current, end) {
+            if (current === end) {
+                console.log(current);
+                return;
+            }
+
+            console.log(current);
+
+            printN(current + 1, end);
+        }
+
+        solution(10);
+    </script>
+</body>
+</html>
