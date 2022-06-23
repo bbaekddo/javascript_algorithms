@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(numbers) {
+            let start = 0;
+            const setA = [];
+            const setB = [];
+
+            return groupSet(numbers, start, setA, setB);
+        }
+
+        function groupSet(n, index, set1, set2) {
+            if (index === (n.length - 1)) {
+                let sum1 = 0, sum2 = 0;
+
+                // 마지막 값이 set1에 있을 때 비교
+                set1.push(n[index]);
+                set1.forEach((element) => {
+                    sum1 += element;
+                });
+                set2.forEach((element) => {
+                    sum2 += element;
+                })
+                if (sum1 === sum2) {
+                    set1.pop();
+                    return 'YES';
+                }
+                set1.pop();
+
+                // 마지막 값이 set2에 있을 때 비교
+                set2.push(n[index]);
+                sum1 -= n[index];
+                sum2 += n[index];
+                if (sum1 === sum2) {
+                    set2.pop();
+                    return 'YES';
+                }
+                set2.pop();
+
+                return 'NO';
+            }
+
+            // 현재 값을 set1에 입력
+            set1.push(n[index]);
+            if (groupSet(n, index + 1, set1, set2) === 'YES') {
+                return 'YES';
+            }
+            set1.pop();
+
+            // 현재 값을 set2에 입력
+            set2.push(n[index]);
+            if (groupSet(n, index + 1, set1, set2) === 'YES') {
+                return 'YES';
+            }
+            set2.pop();
+
+            return 'NO';
+        }
+
+        const inputs = [1, 3, 5, 7];
+
+        console.log(solution(inputs));
+    </script>
+</body>
+</html>
