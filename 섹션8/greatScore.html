@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(time, problems) {
+            let ans = 0;
+            const scores = [];
+
+            function solve(index, sumScore, sumTime) {
+                let currentScore = problems[index][0];
+                let currentTime = problems[index][1];
+
+                // 마지막 문제
+                if (index === (problems.length - 1)) {
+                    // 마지막 문제를 풀 수 있는 경우
+                    if ((sumTime + currentTime) <= time) {
+                        sumScore += currentScore;
+                        scores.push(sumScore);
+                    } else {
+                        scores.push(sumScore);
+                    }
+
+                    return;
+                }
+
+                // 현재 문제를 풀 수 있는 경우
+                if ((sumTime + currentTime) <= time) {
+                    sumScore += currentScore;
+                    sumTime += currentTime;
+                    solve(index + 1, sumScore, sumTime);
+
+                    // 풀 수 있지만 건너뛴 경우
+                    sumScore -= currentScore;
+                    sumTime -= currentTime;
+                    solve(index + 1, sumScore, sumTime);
+                // 현재 못 풀 경우
+                } else {
+                    solve(index + 1, sumScore, sumTime);
+                }
+            }
+
+            solve(0, 0, 0);
+
+            ans = Math.max(...scores);
+
+            return ans;
+        }
+
+        const input = [
+                [10, 5],
+                [25, 12],
+                [15, 8],
+                [6, 3],
+                [7, 4]
+        ];
+
+        console.log(solution(20, input));
+    </script>
+</body>
+</html>
