@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m) {
+            let tempCase = [];
+
+            function pickGem(pickCount, pickCase) {
+                // n개의 숫자만큼 반복
+                for (let i = 1; i <= n; i++) {
+                    // 임시 배열에 숫자 삽입
+                    pickCase.push(i);
+
+                    // m번째 숫자를 선택할 때 출력
+                    if (pickCount === m) {
+                        console.log(pickCase.join(' '));
+                        pickCase.pop();
+                    // 숫자를 선택하고 돌아올 때 임시배열에서 숫자 삭제
+                    } else {
+                        pickGem(pickCount + 1, pickCase);
+                        pickCase.pop();
+                    }
+                }
+            }
+
+            pickGem(1, tempCase);
+        }
+
+        solution(4, 3);
+    </script>
+</body>
+</html>
