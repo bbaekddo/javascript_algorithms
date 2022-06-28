@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, types, m) {
+            const counts = new Set();
+
+            function countChange(count, money) {
+                // 큰 수의 동전부터 교환
+                for (let i = (types.length - 1); i >= 0; i--) {
+                    if ((money - types[i]) > 0) {
+                        countChange(count + 1, (money - types[i]));
+                    // 동전 교환 가능
+                    } else if ((money - types[i]) === 0) {
+                        counts.add(count);
+                    }
+                }
+            }
+
+            countChange(1, m);
+
+            return Math.min(...counts);
+        }
+
+        const coins = [2, 3, 5, 7];
+
+        console.log(solution(3, coins, 16));
+    </script>
+</body>
+</html>
