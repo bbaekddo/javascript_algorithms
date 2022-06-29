@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(a, b) {
+            let ans = 0;
+
+            function getCombination(n, r) {
+                // n이 0일 경우
+                if (n === 0) {
+                    return 0;
+                }
+
+                // r이 0이나 1일 경우 반환값
+                if (r === 0) {
+                    return 1;
+                } else if (r === 1) {
+                    return n;
+                } else {
+                    return getCombination((n - 1), (r - 1)) + getCombination((n - 1), r);
+                }
+            }
+
+            ans = getCombination(a, b);
+
+            return ans;
+        }
+
+        console.log(solution(6, 3));
+    </script>
+</body>
+</html>
