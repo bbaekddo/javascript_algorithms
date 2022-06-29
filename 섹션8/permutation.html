@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m, numbers) {
+            let tempCase = [];
+            let pickAvailable = Array.from({ length: n }, () => 0);
+            let count = 0;
+
+            function getP(pickCount, pickCase, leftNumbers) {
+                for (let i = 0; i < n; i++) {
+                    // 현재 숫자가 이전에 선택됐는지 확인
+                    if (leftNumbers[i] === 0) {
+                        pickCase.push(numbers[i]);
+                        leftNumbers[i] = 1;
+
+                        // 마지막 숫자를 선택할 때
+                        if (pickCount === m) {
+                            console.log(pickCase);
+                            count++;
+                            pickCase.pop();
+                        } else if (pickCount < m) {
+                            // 선택 숫자 배열을 임시 저장
+                            let tempNumbers = [...leftNumbers];
+                            tempNumbers[i] = 0;
+
+                            // 다음 숫자 선택
+                            getP(pickCount + 1, pickCase, leftNumbers);
+
+                            // 현재 숫자 외 다른 숫자를 선택해서 반복
+                            pickCase.pop();
+                            leftNumbers = tempNumbers;
+                        }
+                    }
+                }
+            }
+
+            getP(1, tempCase, pickAvailable);
+
+            console.log(count);
+        }
+
+        const input = [3, 4, 5, 6, 7];
+
+        solution(5, 3, input);
+    </script>
+</body>
+</html>
