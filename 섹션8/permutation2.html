@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, f) {
+            let ans = [];
+            let firstLines = [];
+            let tempNumber = Array.from({ length: n }, () => 0);
+            let tempCombination = [];
+
+            // 첫 번째 줄 조합
+            function getLine(pickCount, checkNumber, numbers) {
+                for (let i = 1; i <= n; i++) {
+                    if (checkNumber[i - 1] === 0) {
+                        numbers.push(i);
+                        checkNumber[i - 1] = 1;
+
+                        // 조합 배열 추가
+                        if (pickCount === n) {
+                            // 배열 개체 삽입을 위한 임시 배열
+                            let pushNumbers = [...numbers];
+                            firstLines.push(pushNumbers);
+                            numbers.pop();
+                            checkNumber[i - 1] = 0;
+
+                            return;
+                        } else if (pickCount < n) {
+                            // 다음 숫자 선택
+                            getLine(pickCount + 1, checkNumber, numbers);
+
+                            numbers.pop();
+                            checkNumber[i - 1] = 0;
+                        }
+                    }
+                }
+            }
+
+            // f값 찾기
+            function getAnswer(lists, count) {
+                if (count === 1) {
+                    return lists[0] === f;
+                }
+
+                let nextLine = [];
+
+                for (let i = 0; i < (lists.length - 1); i++) {
+                    let value = lists[i] + lists[i + 1];
+                    nextLine.push(value);
+                }
+
+                return getAnswer(nextLine, count - 1);
+            }
+
+            getLine(1, tempNumber, tempCombination);
+
+            // 정답 찾기
+            for (let i = 0; i < firstLines.length; i++) {
+                if (getAnswer(firstLines[i], n)) {
+                    ans = [...firstLines[i]];
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        console.log(solution(4, 16));
+    </script>
+</body>
+</html>
