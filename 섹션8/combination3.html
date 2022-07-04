@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, k, integers, m) {
+            let ans = 0;
+            let remainders = [];
+            let checkN = Array.from({ length : n }, () => 0);
+
+            // 정수들을 K로 나눈 나머지 배열
+            for (let i = 0; i < n; i++) {
+                remainders.push(integers[i] % m);
+            }
+
+            function getMultiple(count, numbers, checkNumbers, start, sum) {
+                // k개의 숫자를 뽑은 상태에서 나머지의 합이 6일 때
+                if (count === k && sum === m) {
+                    ans++;
+                } else {
+                    for (let i = start; i < n; i++) {
+                        if (checkNumbers[i] === 0) {
+                            checkNumbers[i] = 1;
+
+                            // 조합이므로 다음 숫자의 시작은 배열에서 현재 숫자의 다음부터
+                            getMultiple(count + 1, numbers, checkNumbers, i + 1, sum + numbers[i]);
+
+                            checkNumbers[i] = 0;
+                        }
+                    }
+                }
+            }
+
+            getMultiple(0, remainders, checkN, 0, 0);
+
+            return ans;
+        }
+
+        const input = [2, 4, 5, 8, 12];
+
+        console.log(solution(5, 3, input, 6));
+    </script>
+</body>
+</html>
