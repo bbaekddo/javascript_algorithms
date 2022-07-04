@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m) {
+            let startComb = 0;
+            let pickGems = [];
+            let checkPick = Array.from({ length : n }, () => 0);
+
+            function getCombination(count, numbers, checkNumbers, start) {
+                if (count === m) {
+                    console.log(numbers);
+                    return;
+                }
+
+                for (let i = start; i < n; i++) {
+                    if (checkNumbers[i] === 0) {
+                        checkNumbers[i] = 1;
+                        numbers.push(i + 1);
+
+                        // 다음에 시작하는 숫자는 현재 수보다 큰 수
+                        getCombination(count + 1, numbers, checkNumbers, i + 1);
+
+                        numbers.pop();
+                        checkNumbers[i] = 0;
+                    }
+                }
+            }
+
+            getCombination(0, pickGems, checkPick, startComb);
+        }
+
+        solution(4, 2);
+    </script>
+</body>
+</html>
