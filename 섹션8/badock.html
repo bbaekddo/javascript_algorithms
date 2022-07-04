@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(total, inputs) {
+            const weights = [];
+            getWeight(total, 0, 0, inputs);
+
+            function getWeight(totalWeight, currentWeight, index, puppies) {
+                if (index === (puppies.length - 1)) {
+                    // 마지막 강아지 포함
+                    currentWeight += puppies[index];
+                    if (currentWeight <= totalWeight) {
+                        weights.push(currentWeight);
+                    }
+
+                    // 마지막 강아지 미포함
+                    currentWeight -= puppies[index];
+                    if (currentWeight !== 0) {
+                        weights.push(currentWeight);
+                    }
+
+                    return;
+                }
+
+                // 현재 강아지 포함
+                let tempWeight = currentWeight;
+                tempWeight += puppies[index];
+                getWeight(totalWeight, tempWeight, index + 1, puppies);
+
+                // 현재 강아지 미포함
+                getWeight(totalWeight, currentWeight, index + 1, puppies);
+            }
+
+            return Math.max(...weights);
+        }
+
+        const numbers = [81, 58, 42, 33, 61];
+
+        console.log(solution(259, numbers));
+    </script>
+</body>
+</html>

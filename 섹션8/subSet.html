@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n) {
+            let start = 1;
+            let subset = '';
+
+            getSet(n, start, subset);
+        }
+
+        function getSet(n, current, subset) {
+            // 마지막 숫자에 도달했을 때
+            if (n === current) {
+                // 공집합은 출력 안함
+                if (subset !== '') {
+                    console.log(subset);
+                }
+
+                subset += current;
+                console.log(subset);
+
+                return;
+            }
+
+            // 현재 숫자를 포함하지 않고 넘어감
+            getSet(n, current + 1, subset);
+
+            // 현재 숫자를 포함하고 넘어감
+            subset += `${current} `;
+            getSet(n, current + 1, subset);
+        }
+
+        solution(4);
+    </script>
+</body>
+</html>

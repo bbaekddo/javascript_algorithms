@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n) {
+            const stack = [];
+
+            decimalToBinary(n, stack);
+        }
+
+        function decimalToBinary(current, stack) {
+            if (current === 1) {
+                stack.push(current);
+
+                let answer = stack.reverse();
+
+                console.log(answer.join(''));
+                return;
+            }
+
+            let quotient = Math.floor(current / 2);
+            let remainder = Math.floor(current % 2);
+
+            stack.push(remainder);
+
+            decimalToBinary(quotient, stack);
+        }
+
+        solution(18);
+    </script>
+</body>
+</html>

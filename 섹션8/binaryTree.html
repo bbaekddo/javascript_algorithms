@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        'use strict';
+
+        // 트리 구조의 Node 클래스 생성
+        class Node {
+            constructor(key, leftNode, rightNode) {
+                this.key = key;
+                this.leftNode = leftNode;
+                this.rightNode = rightNode;
+            }
+
+            get nodeKey() {
+                return this.key;
+            }
+
+            get left() {
+                return this.leftNode;
+            }
+
+            get right() {
+                return this.rightNode;
+            }
+        }
+
+        function solution(input) {
+            const nodes = [];
+
+            // node 입력
+            input.forEach((element, index) => {
+                let key = element[0];
+                let left = -1, right = -1;
+
+                if (element[1] !== -1) {
+                    left = element[1];
+                }
+                if (element[2] !== -1) {
+                    right = element[2];
+                }
+
+                let node = new Node(key, left, right);
+                nodes.push(node);
+            });
+            let answer = '';
+
+            // answer = inOrder(nodes, 1, answer);
+            // answer = preOrder(nodes, 1, answer);
+            answer = postOrder(nodes, 1, answer);
+
+            console.log(answer);
+        }
+
+        function preOrder(nodes, current, word) {
+            let tempWord = word;
+
+            // 현재값 추가
+            tempWord += nodes[current - 1].key;
+
+            // 왼쪽 노드 검사
+            if (nodes[current - 1].leftNode !== -1) {
+                tempWord += preOrder(nodes, nodes[current - 1].leftNode, word);
+            } else if (nodes[current - 1].leftNode === -1) {
+                return nodes[current - 1].key;
+            }
+
+            // 오른쪽 노드 검사
+            if (nodes[current - 1].rightNode !== -1) {
+                tempWord += preOrder(nodes, nodes[current - 1].rightNode, word);
+            }
+
+            return tempWord;
+        }
+
+        function inOrder(nodes, current, word) {
+            let tempWord = word;
+            // 왼쪽 노드 검사
+            if (nodes[current - 1].leftNode !== -1) {
+                tempWord += inOrder(nodes, nodes[current - 1].leftNode, word);
+            } else if (nodes[current - 1].leftNode === -1) {
+                return nodes[current - 1].key;
+            }
+
+            // 현재값 추가
+            tempWord += nodes[current - 1].key;
+
+            // 오른쪽 노드 검사
+            if (nodes[current - 1].rightNode !== -1) {
+                tempWord += inOrder(nodes, nodes[current - 1].rightNode, word);
+            }
+
+            return tempWord;
+        }
+
+        function postOrder(nodes, current, word) {
+            let tempWord = word;
+            // 왼쪽 노드 검사
+            if (nodes[current - 1].leftNode !== -1) {
+                tempWord += postOrder(nodes, nodes[current - 1].leftNode, word);
+            } else if (nodes[current - 1].leftNode === -1) {
+                return nodes[current - 1].key;
+            }
+
+            // 오른쪽 노드 검사
+            if (nodes[current - 1].rightNode !== -1) {
+                tempWord += postOrder(nodes, nodes[current - 1].rightNode, word);
+            }
+
+            // 현재값 추가
+            tempWord += nodes[current - 1].key;
+
+            return tempWord;
+        }
+
+        const input = [
+                [1, 2, 3],
+                [2, 4, 5],
+                [3, 6, 7],
+                [4, 8, -1],
+                [5, 9, -1],
+                [6, -1, -1],
+                [7, 10, -1],
+                [8, -1, -1],
+                [9, -1, -1],
+                [10, -1, -1]
+        ];
+
+        solution(input);
+    </script>
+</body>
+</html>
