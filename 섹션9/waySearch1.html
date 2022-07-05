@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, m, maps) {
+            let ans = 0;
+            // n + 1 개의 인접행렬 정의
+            const adjacentArray = Array.from(Array(n + 1), () => new Array(n + 1).fill(0));
+
+            // 인접행렬 산출
+            let start = 0, end = 0;
+            for (let i = 0; i < m; i++) {
+                start = maps[i][0];
+                end = maps[i][1];
+
+                if (adjacentArray[start][end] === 0) {
+                    adjacentArray[start][end] = 1;
+                }
+            }
+
+            console.log(adjacentArray);
+
+            function goTarget(startPoint, endPoint, links) {
+                if (startPoint === endPoint) {
+                    ans++;
+
+                    return;
+                }
+
+                for (let i = 1; i <= n; i++) {
+                    if (links[startPoint][i] === 1) {
+                        let tempVertex = [...links[startPoint]];
+                        for (let j = 1; j <= n; j++) {
+                            if (links[startPoint][j] !== 0) {
+                                links[startPoint][j] = 0;
+                            }
+                        }
+
+                        goTarget(i, endPoint, links);
+
+                        links[startPoint] = tempVertex;
+                    }
+                }
+            }
+
+            goTarget(1, n, adjacentArray);
+
+            return ans;
+        }
+
+        const input = [
+                [1, 2],
+                [1, 3],
+                [1, 4],
+                [2, 1],
+                [2, 3],
+                [2, 5],
+                [3, 4],
+                [4, 2],
+                [4, 5]
+        ]
+
+        console.log(solution(5, 9, input));
+    </script>
+</body>
+</html>
