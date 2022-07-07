@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(s, e) {
+            // 현수의 움직임 배열
+            const dx = [-1, 1, 5];
+
+            // 좌표 레벨
+            const levels = Array.from({ length : 10001 }, () => Number.MAX_SAFE_INTEGER);
+            levels[s] = 0;
+
+            // 다음 위치 큐
+            const queue = [];
+            for (let i = 0; i < dx.length; i++) {
+                queue.push(s + dx[i]);
+                levels[s + dx[i]] = 1;
+            }
+
+            // BFS 탐색
+            function goNext(current) {
+                // 탐색 종료 조건
+                if (current === e) {
+                    return;
+                }
+
+                // 현재 레벨
+                let currentLevel = levels[current];
+
+                // 큐에 다음 위치가 있을 경우
+                for (let i = 0; i < dx.length; i++) {
+                    if (levels[current + dx[i]] > (currentLevel + 1)) {
+                        queue.push(current + dx[i]);
+                        levels[current + dx[i]] = currentLevel + 1
+                    }
+                }
+
+                // 큐를 통해 다음 위치 이동
+                let next = queue.shift();
+                goNext(next);
+            }
+
+            // 시작
+            goNext(queue.shift());
+
+            return levels[e];
+        }
+
+        console.log(solution(5, 14));
+    </script>
+</body>
+</html>
