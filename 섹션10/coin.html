@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, coins, m) {
+            let ans = Number.MAX_SAFE_INTEGER;
+
+            // 동전 종류를 내림차순으로 정렬
+            coins.sort((a, b) => b - a);
+
+            let completeFlag = false;
+
+            function getChange(coinList, sum, count) {
+                // 동전 개수가 현재 최솟값보다 크면 바로 탐색 종료
+                if (!completeFlag) {
+                    // 동전 개수가 맞아 떨어지면 정답 추가
+                    if (sum === m) {
+                        ans = Math.min(count, ans);
+                        completeFlag = true;
+                    } else if (sum < m) {
+                        for (let i = 0; i < n; i++) {
+                            coinList.push(coins[i]);
+
+                            getChange(coinList, sum + coins[i], count + 1);
+
+                            // 최소 개수 찾으면 바로 종료
+                            if (completeFlag) {
+                                break;
+                            }
+
+                            coinList.pop();
+                        }
+                    }
+                }
+            }
+
+            let tempArr = [];
+
+            getChange(tempArr, 0, 0);
+
+            return ans;
+        }
+
+        const input = [1, 2, 5];
+
+        console.log(solution(3, input, 478));
+    </script>
+</body>
+</html>
