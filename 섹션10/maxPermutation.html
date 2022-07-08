@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, data) {
+            let ans = 0;
+
+            function getSequence(current, numbers) {
+                // 현재 레벨에서 탐색할 다음 인덱스 저장
+                let queue = [];
+
+                if (current < n) {
+                    // 현재 숫자보다 큰 숫자는 queue에 저장
+                    for (let i = (current + 1); i < n; i++) {
+                        if (data[current] < data[i]) {
+                            queue.push(i);
+                        }
+                    }
+
+                    // queue에 있는 숫자로 깊이 우선 탐색
+                    if (queue.length > 0) {
+                        for (let i = 0; i < queue.length; i++) {
+                            let nextIndex = queue[i];
+                            numbers.push(data[nextIndex]);
+
+                            getSequence(nextIndex, numbers, queue);
+
+                            numbers.pop();
+                        }
+                    // queue에 숫자가 없을 경우 탐색 종료
+                    } else {
+                        ans = Math.max(numbers.length, ans);
+                    }
+                }
+            }
+
+            // 시작 위치를 변경하면서 탐색
+            for (let i = 0; i < (n - 1); i++) {
+                let numberArr = [];
+                numberArr.push(data[i]);
+                getSequence(i, numberArr);
+            }
+
+            return ans;
+        }
+
+        const input = [5, 3, 7, 8, 6, 2, 9, 4];
+
+        console.log(solution(10, input));
+    </script>
+</body>
+</html>
