@@ -13,9 +13,6 @@
             const dx = [-1, 1, 0, 0, -1, -1, 1, 1];
             const dy = [0, 0, -1, 1, -1, 1, -1, 1];
 
-            // 체크 배열 생성
-            const checkArray = Array.from(Array(maps.length), () => new Array(maps[0].length).fill(0));
-
             // 한 개의 섬 찾기
             function findIsland(current) {
                 let x = current[0];
@@ -26,13 +23,12 @@
 
                 // 주변 좌표 탐색
                 for (let i = 0; i < dx.length; i++) {
+                    let nextX = x + dx[i];
+                    let nextY = y + dy[i];
                     // 주변 좌표가 맵 범위 내 조건에 있어야함
-                    if ((x + dx[i]) >= 0 && (x + dx[i]) < maps.length) {
-                        if ((y + dy[i]) >= 0 && (y + dy[i]) < maps[y].length) {
-                            if ((maps[x + dx[i]][y + dy[i]] === 1) && (checkArray[x + dx[i]][y + dy[i]] === 0)) {
-                                checkArray[x + dx[i]][y + dy[i]] = 1;
-                                findIsland([x + dx[i], y + dy[i]]);
-                            }
+                    if (nextX >= 0 && nextX < maps.length && nextY >= 0 && nextY < maps[y].length) {
+                        if ((maps[nextX][nextY] === 1)) {
+                            findIsland([nextX, nextY]);
                         }
                     }
                 }
