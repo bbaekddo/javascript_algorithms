@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        // BFS 활용
+        function solution(n, maps) {
+            let ans = 0;
+
+            // 주변 좌표 탐색용
+            const dx = [-1, 1, 0, 0, -1, -1, 1, 1];
+            const dy = [0, 0, -1, 1, -1, 1, -1, 1];
+
+            // 대기 좌표 큐
+            const queX = [];
+            const queY = [];
+
+            // 한 개의 섬 찾기
+            function findIsland(current) {
+                let x = current[0];
+                let y = current[1];
+                let nextX, nextY;
+
+                // 주변 좌표 탐색
+                for (let i = 0; i < dx.length; i++) {
+                    nextX = x + dx[i];
+                    nextY = y + dy[i];
+                    // 주변 좌표가 맵 범위 내 조건에 있어야함
+                    if (nextX >= 0 && nextX < maps.length && nextY >= 0 && nextY < maps[y].length) {
+                        if ((maps[nextX][nextY] === 1)) {
+                            maps[nextX][nextY] = 0;
+                            queX.push(nextX);
+                            queY.push(nextY);
+                        }
+                    }
+                }
+
+                // 큐가 빌 때까지 반복
+                if (queX.length > 0) {
+                    nextX = queX.shift();
+                    nextY = queY.shift();
+                    findIsland([nextX, nextY]);
+                }
+            }
+
+            // 지도 탐색
+            for (let i = 0; i < maps.length; i++) {
+                for (let j = 0; j < maps[i].length; j++) {
+                    if (maps[i][j] === 1) {
+                        maps[i][j] = 0;
+                        ans++;
+                        findIsland([i, j]);
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const input = [
+                [1, 1, 0, 0, 0, 1, 0],
+                [0, 1, 1, 0, 1, 1, 0],
+                [0, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 1, 1],
+                [1, 1, 0, 1, 1, 0, 0],
+                [1, 0, 0, 0, 1, 0, 0],
+                [1, 0, 1, 0, 1, 0, 0]
+        ];
+
+        console.log(solution(7, input));
+    </script>
+</body>
+</html>
