@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(steps, n) {
+            let ans = 0;
+
+            const upStairs = [];
+
+            function getPermutation(sum, numbers) {
+                // n개의 계단을 올랐을 때
+                if (sum === n) {
+                    console.log(numbers);
+                    ans++;
+
+                    return;
+                }
+
+                // 계단 오르는 조합 찾기
+                for (let i = 0; i < steps.length; i++) {
+                    sum += steps[i];
+
+                    // 현재까지 합이 n보다 크면 원상복귀
+                    if (sum > n) {
+                        sum -= steps[i];
+                    } else {
+                        numbers.push(steps[i]);
+                        getPermutation(sum, numbers);
+                        numbers.pop();
+                        sum -= steps[i];
+                    }
+                }
+            }
+
+            getPermutation(0, upStairs);
+
+            return ans;
+        }
+
+        const input = [1, 2, 3];
+
+        console.log(solution(input, 5));
+    </script>
+</body>
+</html>
