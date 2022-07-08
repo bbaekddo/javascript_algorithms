@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        function solution(n, maps) {
+            let ans = 0;
+
+            // 주변 좌표 탐색용
+            const dx = [-1, 1, 0, 0, -1, -1, 1, 1];
+            const dy = [0, 0, -1, 1, -1, 1, -1, 1];
+
+            // 한 개의 섬 찾기
+            function findIsland(current) {
+                let x = current[0];
+                let y = current[1];
+
+                // 현재 좌표의 값을 2로 변경
+                maps[x][y] = 2;
+
+                // 주변 좌표 탐색
+                for (let i = 0; i < dx.length; i++) {
+                    let nextX = x + dx[i];
+                    let nextY = y + dy[i];
+                    // 주변 좌표가 맵 범위 내 조건에 있어야함
+                    if (nextX >= 0 && nextX < maps.length && nextY >= 0 && nextY < maps[y].length) {
+                        if ((maps[nextX][nextY] === 1)) {
+                            findIsland([nextX, nextY]);
+                        }
+                    }
+                }
+            }
+
+            // 지도 탐색
+            for (let i = 0; i < maps.length; i++) {
+                for (let j = 0; j < maps[i].length; j++) {
+                    if (maps[i][j] === 1) {
+                        ans++;
+                        findIsland([i, j]);
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        const input = [
+                [1, 1, 0, 0, 0, 1, 0],
+                [0, 1, 1, 0, 1, 1, 0],
+                [1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 1, 1],
+                [1, 1, 0, 0, 0, 1, 0],
+                [1, 0, 0, 0, 1, 0, 0],
+                [1, 0, 1, 0, 1, 0, 0]
+        ];
+
+        console.log(solution(7, input));
+    </script>
+</body>
+</html>
