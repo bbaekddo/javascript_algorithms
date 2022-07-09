@@ -6,7 +6,8 @@
 </head>
 <body>
     <script>
-        function solution(steps, n) {
+        // DFS
+        function solution1(steps, n) {
             let ans = 0;
 
             const jumps = [];
@@ -40,9 +41,44 @@
             return ans;
         }
 
-        const input = [1, 2];
+        // 동적계획법
+        function solution(steps, n) {
+            // 동적 테이블 생성
+            const dynamicArr = Array.from({ length : n + 2 }, () => 0);
+            let current = 1;
 
-        console.log(solution(input, 8));
+            // n + 1 번째에 있는 곳까지 반복
+            while (current <= (n + 1)) {
+                // 스텝 초기화
+                if (current <= steps[steps.length - 1]) {
+                    for (let i = 0; i < steps.length; i++) {
+                        if (current > steps[i]) {
+                            dynamicArr[current] += dynamicArr[current - steps[i]];
+                        }
+                    }
+
+                    // 현재 위치가 스텝안에 포함될 경우만 경우의 수 1 증가
+                    if (steps.includes(current)) {
+                        dynamicArr[current] += 1;
+                    }
+                // 현재 위치까지 오는 경우의 수
+                } else {
+                    for (let i = 0; i < steps.length; i++) {
+                        dynamicArr[current] += dynamicArr[current - steps[i]];
+                    }
+                }
+
+                current++;
+            }
+
+            console.log(dynamicArr);
+
+            return dynamicArr[n + 1];
+        }
+
+        const input = [3, 6, 8, 10];
+
+        console.log(solution(input, 43));
     </script>
 </body>
 </html>
