@@ -6,7 +6,8 @@
 </head>
 <body>
     <script>
-        function solution(n, data) {
+        // DFS
+        function solution1(n, data) {
             let ans = 0;
 
             function getSequence(current, numbers) {
@@ -48,9 +49,32 @@
             return ans;
         }
 
-        const input = [5, 3, 7, 8, 6, 2, 9, 4];
+        // 동적계획법
+        function solution(n, data) {
+            // 동적 테이블 생성. 테이블 값은 해당 인덱스에 위치한 수를 마지막으로 갖는 증가수열의 최대 길이
+            // ex) dy[3] = 2 --> data[3] (=7)을 마지막으로 갖는 증가수열 ([5, 7] or [3, 7])의 길이 2
+            const dynamicArr = Array.from({ length : n }, () => 0);
 
-        console.log(solution(10, input));
+            // 1번 항부터 증가수열 길이 찾기
+            for (let i = 0; i < n; i++) {
+                let tempMax = 0;
+
+                for (let j = (i - 1); j >= 0; j--) {
+                    if (data[i] > data[j] && tempMax < dynamicArr[j]) {
+                        tempMax = dynamicArr[j];
+                    }
+                }
+
+                // 가장 큰 수열의 길이에서 현재 값을 추가하므로 1 증가
+                dynamicArr[i] = tempMax + 1;
+            }
+
+            return Math.max(...dynamicArr);
+        }
+
+        const input = [9, 3, 10, 11, 12, 2, 5, 7, 20, 8, 21];
+
+        console.log(solution(input.length, input));
     </script>
 </body>
 </html>
