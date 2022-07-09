@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+    <script>
+        // 재귀함수 이용 (DFS)
+        function solution1(steps, n) {
+            let ans = 0;
+
+            function getPermutation(sum) {
+                // n개의 계단을 올랐을 때
+                if (sum === n) {
+                    ans++;
+
+                    return;
+                }
+
+                // 계단 오르는 조합 찾기
+                for (let i = 0; i < steps.length; i++) {
+                    sum += steps[i];
+
+                    // 현재까지 합이 n보다 크면 원상복귀
+                    if (sum > n) {
+                        sum -= steps[i];
+                    } else {
+                        getPermutation(sum);
+                        sum -= steps[i];
+                    }
+                }
+            }
+
+            getPermutation(0);
+
+            return ans;
+        }
+
+        // 동적계획법 이용
+        function solution(steps, n) {
+            // 동적 테이블 생성
+            const dynamicArr = Array.from({ length : n + 1 }, () => 0);
+
+            // 동적 테이블 범위값과 현재 위치 정의
+            let current = 1;
+
+            // 스텝의 종류 계산
+            while (current <= n) {
+                // 가장 마지막 스텝보다 작을 때, 위치값 초기화
+                if (current <= steps[steps.length - 1]) {
+                    // 스텝 초기화
+                    for (let i = 0; i < current; i++) {
+                        // 현재 값이 스텝의 값보다 크거나 같을 때만 초기화
+                        if (current >= steps[i]) {
+                            dynamicArr[current] += dynamicArr[current - steps[i]];
+                        }
+                    }
+
+                    // 현재 위치와 같은 스텝이 있으면 1 추가
+                    if (steps.includes(current)) {
+                        dynamicArr[current] += 1;
+                    }
+                // 동적 테이블 계산
+                } else {
+                    for (let i = 0; i < steps.length; i++) {
+                        dynamicArr[current] += dynamicArr[current - steps[i]];
+                    }
+                }
+
+                current++;
+            }
+
+            return dynamicArr[n];
+        }
+
+        const input = [1, 3, 5, 6, 10];
+
+        // console.log(solution1(input, 41));
+        console.log(solution(input, 17));
+    </script>
+</body>
+</html>
